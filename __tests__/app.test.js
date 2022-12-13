@@ -13,6 +13,19 @@ describe('GET Categories', () => {
     test('should return object with one entry: {"categories" : <all categories data>}', () => {
         return request(app).get('/api/categories')
         .expect(200)
-        .expect({'categories' : categoriesData})
+        .then((res) => {
+            const categories = res.body.categories;
+
+            console.log(categories);
+
+            expect(Array.isArray(categories)).toBe(true);
+            expect(categories.length).toBe(4);
+            
+            categories.forEach(category => {
+                expect(typeof category.slug).toBe('string');
+                expect(typeof category.description).toBe('string');
+                expect(Object.keys(category).length).toBe(2);
+            });
+        })
     });
 });
