@@ -13,7 +13,6 @@ afterAll(() => {
 })
 
 describe('GET Reviews', () => {
-    //console.log(reviewsData);
     test('should return object with one entry: {"reviews" : <all reviews data>}', () => {
         return request(app).get('/api/reviews')
         .expect(200)
@@ -25,17 +24,16 @@ describe('GET Reviews', () => {
             expect(String(reviews[12].created_at)).toBe('1970-01-10T02:08:38.400Z')
             
             reviews.forEach(review => {
-                expect(review).toHaveProperty(
-                    'review_id',
-                    'title',
-                    'category',
-                    'designer',
-                    'owner',
-                    'review_body',
-                    'review_img_url',
-                    'created_at',
-                    'votes'
-                )
+                expect(review).toHaveProperty('review_id');
+                expect(review).toHaveProperty('title');
+                expect(review).toHaveProperty('category');
+                expect(review).toHaveProperty('designer');
+                expect(review).toHaveProperty('owner');
+                expect(review).toHaveProperty('review_body');
+                expect(review).toHaveProperty('review_img_url');
+                expect(review).toHaveProperty('created_at');
+                expect(review).toHaveProperty('votes');
+                //expect(review).toHaveProperty('comment_count');
             });
         })
     });
