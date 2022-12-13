@@ -2,9 +2,14 @@ const request = require('supertest')
 const app = require('../app')
 const data = require('../db/data/test-data/index')
 const seed = require('../db/seeds/seed')
+const db = require('../db/connection')
 
 beforeEach(() => {
     return seed(data);
+})
+
+afterAll(() => {
+    db.end();
 })
 
 describe('GET Reviews', () => {
@@ -15,19 +20,20 @@ describe('GET Reviews', () => {
         .then((res) => {
             const reviews = res.body.reviews;
 
-            expect(Array.isArray(reviews)).toBe(true);
             expect(reviews.length).toBe(13);
             
             reviews.forEach(review => {
-                expect(typeof review.review_id).toBe('number');
-                expect(typeof review.title).toBe('string');
-                expect(typeof review.category).toBe('string');
-                expect(typeof review.designer).toBe('string');
-                expect(typeof review.owner).toBe('string');
-                expect(typeof review.review_body).toBe('string');
-                expect(/[\/.](gif|jpg|jpeg|tiff|png)/i.test(review.review_img_url)).toBe(true);
-                expect(typeof review.created_at).toBe('string');
-                expect(typeof review.votes).toBe('number');
+                expect(review).toHaveProperty(
+                    'review_id',
+                    'title',
+                    'category',
+                    'designer',
+                    'owner',
+                    'review_body',
+                    'review_img_url',
+                    'created_at',
+                    'votes'
+                )
             });
         })
     });
