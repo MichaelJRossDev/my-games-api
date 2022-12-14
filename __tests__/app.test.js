@@ -51,8 +51,8 @@ describe('GET Categories', () => {
             expect(categories.length).toBe(4);
             
             categories.forEach(category => {
-                expect(typeof category.slug).toBe('string');
-                expect(typeof category.description).toBe('string');
+                expect(category).toHaveProperty('slug');
+                expect(category).toHaveProperty('description');
             });
         })
     });
