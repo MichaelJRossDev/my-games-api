@@ -38,6 +38,10 @@ describe('GET Reviews', () => {
                 expect(review).toHaveProperty('votes');
                 expect(review).toHaveProperty('comment_count');
                 expect(typeof review.comment_count).toBe('number'); //Checks the CAST() SQL function has worked
+            })
+        })
+    })
+})
                 
 describe('GET Categories', () => {
     test('should return object with one entry: {"categories" : <all categories data>}', () => {
@@ -45,8 +49,6 @@ describe('GET Categories', () => {
         .expect(200)
         .then((res) => {
             const categories = res.body.categories;
-
-            console.log(categories);
 
             expect(Array.isArray(categories)).toBe(true);
             expect(categories.length).toBe(4);
