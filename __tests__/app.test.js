@@ -8,7 +8,6 @@ beforeEach(() => {
     return seed(data);
 })
 
-
 afterAll(() => {
     return db.end();
 })
@@ -42,21 +41,18 @@ describe('GET Reviews', () => {
         })
     })
 })
-                
+
 describe('GET Categories', () => {
     test('should return object with one entry: {"categories" : <all categories data>}', () => {
         return request(app).get('/api/categories')
         .expect(200)
         .then((res) => {
             const categories = res.body.categories;
-
-            expect(Array.isArray(categories)).toBe(true);
             expect(categories.length).toBe(4);
             
             categories.forEach(category => {
                 expect(typeof category.slug).toBe('string');
                 expect(typeof category.description).toBe('string');
-                expect(Object.keys(category).length).toBe(2);
             });
         })
     });
