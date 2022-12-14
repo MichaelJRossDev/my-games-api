@@ -9,7 +9,7 @@ beforeEach(() => {
 })
 
 afterAll(() => {
-    db.end();
+    return db.end();
 })
 
 describe('GET Reviews', () => {
@@ -20,8 +20,10 @@ describe('GET Reviews', () => {
             const reviews = res.body.reviews;
 
             expect(reviews.length).toBe(13);
-            expect(String(reviews[0].created_at)).toBe('2021-01-25T11:16:54.963Z') //Checks it's in descending date order
-            expect(String(reviews[12].created_at)).toBe('1970-01-10T02:08:38.400Z')
+
+            expect(reviews).toBeSortedBy('created_at', {
+                descending: true
+              });
             
             reviews.forEach(review => {
                 expect(review).toHaveProperty('review_id');
