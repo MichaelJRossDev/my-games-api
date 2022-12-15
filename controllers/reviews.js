@@ -7,19 +7,25 @@ exports.sendReviews = (req, res) => {
 
 exports.sendReviewById = (req, res) => {
     const id = req.params.review_id;
-    if (/^\d+$/.test(id)) {
 
-        selectReviewById(req.params.review_id)
-        .then(review => {
-            if (review) res.status(200).send({ review });
-            else res.sendStatus(404);
-        })
-        .catch((err) => res.sendStatus(500));
+    selectReviewById(id)
+    .then(review => {
+        switch (review) {
+            case -1: //Invalid id
+                res.sendStatus(400)
+                break;
+            
+            case 0: //Valid id but does not exist in database
+                res.sendStatus(404);
+                break;
         
-    } else {
+            default: //Valid id and found
+                res.status(200).send({ review });
+                break;
+        }
+    })
+    .catch((err) => res.sendStatus(500));
         
-        res.sendStatus(400);
 
-    }
-    
+
 }

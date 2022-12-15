@@ -17,8 +17,11 @@ exports.selectReviewById = (id) => {
   WHERE review_id = $1`, [id])
   .then((result) => {
     if (result.rows.length === 0) {
-      return undefined;
+      return 0;
     }
-    return result.rows[0]
+    return result.rows[0];
+  })
+  .catch(() => {
+    return -1;
   })
 }
