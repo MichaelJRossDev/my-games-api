@@ -10,3 +10,15 @@ exports.selectReviews = () => {
     return result.rows
   })
 };
+
+exports.selectReviewById = (id) => {
+  return db.query(`
+  SELECT * FROM reviews
+  WHERE review_id = $1`, [id])
+  .then((result) => {
+    if (result.rows.length === 0) {
+      return undefined;
+    }
+    return result.rows[0]
+  })
+}

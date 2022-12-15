@@ -57,3 +57,34 @@ describe('GET Categories', () => {
         })
     });
 });
+
+describe('GET Review by ID', () => {
+
+    test('Should return object with one entry, with the review data as the value.', () => {
+        return request(app).get('/api/reviews/13')
+        .expect(200)
+        .then( (response) => {
+            review = response.body.review;
+            expect(review.review_id).toBe(13);
+            expect(review.title).toBe('Settlers of Catan: Don\'t Settle For Less');
+            expect(review.category).toBe('social deduction');
+            expect(review.designer).toBe('Klaus Teuber');
+            expect(review.owner).toBe('mallionaire');
+            expect(review.review_body).toBe('You have stumbled across an uncharted island rich in natural resources, but you are not alone; other adventurers have come ashore too, and the race to settle the island of Catan has begun! Whether you exert military force, build a road to rival the Great Wall, trade goods with ships from the outside world, or some combination of all three, the aim is the same: to dominate the island. Will you prevail? Proceed strategically, trade wisely, and may the odds be in favour.')
+            expect(review.review_img_url).toBe('https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg');
+            expect(review.created_at).toBe('1970-01-10T02:08:38.400Z');
+            expect(review.votes).toBe(16);
+        })
+    })
+
+    test('Valid but nonexistant review_id returns error code 404', () => {
+        return request(app).get('/api/reviews/300')
+        .expect(404)
+    })
+
+    test('Invalid review_id returns error code 400', () => {
+        return request(app).get('/api/reviews/banana')
+        .expect(400)
+    })
+
+});
