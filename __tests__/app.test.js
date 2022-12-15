@@ -57,3 +57,23 @@ describe('GET Categories', () => {
         })
     });
 });
+
+describe('GET comments by review ID', () => {
+    test('Should return all comments of a given review', () => {
+        return request(app).get('/api/reviews/3/comments')
+        .expect(200)
+        .then((response) => {
+            const comments = response.body.comments;
+            comments.forEach(comment => {
+                expect(comment).toHaveProperty('comment_id');
+                expect(comment).toHaveProperty('body');
+                expect(comment).toHaveProperty('review_id');
+                expect(comment).toHaveProperty('author');
+                expect(comment).toHaveProperty('votes');
+                expect(comment).toHaveProperty('created_at');
+            });
+
+            expect(comments).toBeSortedBy('created_at', {descending : true});
+        })
+    })
+});
