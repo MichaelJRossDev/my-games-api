@@ -80,11 +80,13 @@ describe('GET Review by ID', () => {
     test('Valid but nonexistant review_id returns error code 404', () => {
         return request(app).get('/api/reviews/300')
         .expect(404)
+        .expect('Not Found')
     })
 
     test('Invalid review_id returns error code 400', () => {
         return request(app).get('/api/reviews/banana')
         .expect(400)
+        .expect('Bad Request')
     })
 
 });
