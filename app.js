@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const { sendReviews } = require('./controllers/reviews');
 const { sendCategories } = require('./controllers/categories');
-const { receiveComment } = require('./controllers/comments');
+const { sendCommentsByReviewId, receiveComment } = require('./controllers/comments');
 
 app.use(express.json());
 
