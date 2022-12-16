@@ -87,7 +87,7 @@ describe('POST Comment', () => {
     }
 
     const incorrectUsername = {
-        username: "JohnDoe",
+        username: "JaneDoe",
         body: "Nice game. Would play again"
     }
 
