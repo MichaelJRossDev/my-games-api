@@ -76,6 +76,7 @@ describe('GET comments by review ID', () => {
             });
 
             expect(comments).toBeSortedBy('created_at', {descending : true});
+        })
     })
 })
 
