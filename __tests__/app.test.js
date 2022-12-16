@@ -57,3 +57,16 @@ describe('GET Categories', () => {
         })
     });
 });
+
+describe('POST Comment', () => {
+    test('Should add comment to database', () => {
+
+        const payload = {
+            username: "JohnDoe",
+            body: "This game ruined Christmas. My whole family hate me. 5 Stars."
+        }
+        return request(app).post('/api/reviews/13/comments')
+        .send(payload)
+        .expect(201)
+    });
+});
