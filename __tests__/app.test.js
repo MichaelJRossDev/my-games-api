@@ -67,7 +67,7 @@ describe('GET comments by review ID', () => {
             expect(comments.length).not.toBe(0);
             comments.forEach(comment => {
                 expect(comment).toHaveProperty('comment_id');
-                expect(comment).toHaveProperty('body');
+                expect(typeof comment.body).toBe('string');
                 expect(comment.review_id).toBe(3);
                 expect(comment).toHaveProperty('author');
                 expect(comment).toHaveProperty('votes');
