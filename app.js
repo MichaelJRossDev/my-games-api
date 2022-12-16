@@ -10,6 +10,8 @@ app.get('/api/categories', sendCategories);
 
 app.get('/api/reviews', sendReviews);
 
-app.post('/api/reviews/:review_id/comments', receiveComment)
+app.get('/api/reviews/:review_id/comments', sendCommentsByReviewId);
+
+app.post('/api/reviews/:review_id/comments', receiveComment);
 
 module.exports = app;

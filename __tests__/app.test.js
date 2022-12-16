@@ -59,7 +59,6 @@ describe('GET Categories', () => {
 });
 
 
-
 describe('GET comments by review ID', () => {
     test('Should return all comments of a given review', () => {
         return request(app).get('/api/reviews/3/comments')
@@ -80,7 +79,6 @@ describe('GET comments by review ID', () => {
         })
     })
 })
-
 
 describe('POST Comment', () => {
     const correctComment = {
