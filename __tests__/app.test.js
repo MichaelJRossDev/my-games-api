@@ -64,10 +64,11 @@ describe('GET comments by review ID', () => {
         .expect(200)
         .then((response) => {
             const comments = response.body.comments;
+            expect(comments.length).not.toBe(0);
             comments.forEach(comment => {
                 expect(comment).toHaveProperty('comment_id');
                 expect(comment).toHaveProperty('body');
-                expect(comment).toHaveProperty('review_id');
+                expect(comment.review_id).toBe(3);
                 expect(comment).toHaveProperty('author');
                 expect(comment).toHaveProperty('votes');
                 expect(comment).toHaveProperty('created_at');
