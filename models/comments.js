@@ -6,4 +6,5 @@ exports.postComment = (id, payload) => {
     VALUES ($1, $2, $3, 0)
     RETURNING *`, [payload.body, id, payload.username])
     .then((result) => result.rows[0])
+    .catch(err => err)
 }

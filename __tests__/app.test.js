@@ -59,14 +59,23 @@ describe('GET Categories', () => {
 });
 
 describe('POST Comment', () => {
+    const correctComment = {
+        username: "philippaclaire9",
+        body: "This game ruined Christmas. My whole family hate me. 5 Stars."
+    }
+
+    const incorrectUsername = {
+        username: "JohnDoe",
+        body: "Nice game. Would play again"
+    }
+
+    const missingField = {
+        username: "philippaclaire9"
+    }
     test('Should add comment to database', () => {
 
-        const payload = {
-            username: "philippaclaire9",
-            body: "This game ruined Christmas. My whole family hate me. 5 Stars."
-        }
         return request(app).post('/api/reviews/13/comments')
-        .send(payload)
+        .send(correctComment)
         .expect(201)
         .then((response) => {
             const comment = response.body.comment;
@@ -86,5 +95,35 @@ describe('POST Comment', () => {
                 expect(databaseComment.comment_id).toBe(comment.comment_id)
             })
         })
+    });
+
+    test('Should return error 404 for unknown review', () => {
+        return request(app).post('/api/reviews/450/comments')
+        .send(correctComment)
+        .expect(404)
+    });
+
+    test('Should return error 400 for invalid review id', () => {
+        return request(app).post('/api/reviews/banana/comments')
+        .send(correctComment)
+        .expect(400)
+    });
+
+    test('Should return error 400 for unknown username', () => {
+        return request(app).post('/api/reviews/4/comments')
+        .send(incorrectUsername)
+        .expect(404)
+    });
+
+    test('Should return error 404 for unknown username', () => {
+        return request(app).post('/api/reviews/4/comments')
+        .send(incorrectUsername)
+        .expect(404)
+    });
+
+    test('Should return error 400 for missing field', () => {
+        return request(app).post('/api/reviews/4/comments')
+        .send(missingField)
+        .expect(400)
     });
 });
