@@ -184,3 +184,18 @@ describe('POST Comment', () => {
         .expect(400)
     });
 });
+
+describe.only('Patch Review', () => {
+    test('Should correctly patch review', () => {
+        const changes = {
+            inc_votes: 3
+        }
+        return request(app).patch('/api/reviews/13')
+        .send(changes)
+        .expect(200)
+        .then((response) => response.body.rows[0])
+        .then((review) => {
+            expect(review.votes).toBe(19);
+        })
+    })
+});

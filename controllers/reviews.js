@@ -1,5 +1,5 @@
 const { lastIndexOf } = require('../db/data/test-data/categories');
-const { selectReviews, selectReviewById } = require('../models/reviews');
+const { selectReviews, selectReviewById, patchReview } = require('../models/reviews');
 
 exports.sendReviews = (req, res) => {
     selectReviews().then((reviews) => res.status(200).send({ reviews }));
@@ -25,7 +25,12 @@ exports.sendReviewById = (req, res) => {
         }
     })
     .catch((err) => res.sendStatus(500));
+}
         
-
-
+exports.alterReview = (req, res) => {
+    const id = req.params.review_id
+    const changes = req.body
+    patchReview(id, changes).then((response) => {
+        res.status(200).send(response);
+    })
 }

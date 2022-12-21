@@ -25,3 +25,11 @@ exports.selectReviewById = (id) => {
     return -1;
   })
 }
+
+exports.patchReview = (id, changes) => {
+  return db.query(`
+  UPDATE Reviews
+  SET votes = votes + $1
+  WHERE review_id = $2
+  RETURNING *`, [changes.inc_votes, id])
+}
