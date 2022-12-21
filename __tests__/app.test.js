@@ -186,6 +186,14 @@ describe('POST Comment', () => {
 });
 
 describe.only('Patch Review', () => {
+    const changes = {
+        inc_votes: 3
+    }
+
+    const invalidRequest = {
+        foo: "bar"
+    }
+
     test('Should correctly patch review', () => {
         const changes = {
             inc_votes: 3
@@ -198,4 +206,24 @@ describe.only('Patch Review', () => {
             expect(review.votes).toBe(19);
         })
     })
+
+    test('Should return 400 on invalid request', () => {
+        return request(app).patch('/api/reviews/13')
+        .send(invalidRequest)
+        .expect(400)
+    });
+
+    test('Should return 404 on nonexistent review ID', () => {
+        return request(app).patch('/api/reviews/130')
+        .send(changes)
+        .expect(404)
+        .expect({msg : `No such review ID: 130`})
+    })
+
+    test('Should return 400 on invalid review ID', () => {
+        return request(app).patch('/api/reviews/banana')
+        .send(changes)
+        .expect(400)
+    })
+
 });

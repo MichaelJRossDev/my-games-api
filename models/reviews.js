@@ -32,4 +32,6 @@ exports.patchReview = (id, changes) => {
   SET votes = votes + $1
   WHERE review_id = $2
   RETURNING *`, [changes.inc_votes, id])
+  .then((output) => output.rows && output.rows.length > 0 ? output : {code : 'review not found'})
+  .catch(err => err)
 }

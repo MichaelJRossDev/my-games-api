@@ -31,6 +31,27 @@ exports.alterReview = (req, res) => {
     const id = req.params.review_id
     const changes = req.body
     patchReview(id, changes).then((response) => {
-        res.status(200).send(response);
+        if (response.code) {
+            switch (response.code) {
+                case '23502':
+                    res.status(400).send(response)
+                    break;
+                
+                case 'review not found':
+                    res.status(404).send({msg : `No such review ID: ${id}`})
+                    break;
+
+                case '22P02':
+                    res.status(400).send(response)
+                    break;
+
+                default:
+                    res.sendStatus(500);
+                    break;
+            }
+        } else {
+            res.status(200).send(response);
+        }
+        
     })
 }
