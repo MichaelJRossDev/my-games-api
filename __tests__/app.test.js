@@ -185,7 +185,7 @@ describe('POST Comment', () => {
     });
 });
 
-describe.only('Patch Review', () => {
+describe('Patch Review', () => {
     const changes = {
         inc_votes: 3
     }
