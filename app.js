@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { sendReviews, sendReviewById } = require('./controllers/reviews');
+const { sendReviews, sendReviewById, alterReview } = require('./controllers/reviews');
 const { sendCategories } = require('./controllers/categories');
 const { receiveComment, sendCommentsByReviewId } = require('./controllers/comments');
 
@@ -15,5 +15,7 @@ app.get('/api/reviews/:review_id', sendReviewById);
 app.get('/api/reviews/:review_id/comments', sendCommentsByReviewId);
 
 app.post('/api/reviews/:review_id/comments', receiveComment);
+
+app.patch('/api/reviews/:review_id', alterReview)
 
 module.exports = app;
