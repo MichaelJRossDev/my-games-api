@@ -3,6 +3,9 @@ const app = express();
 const { sendReviews, sendReviewById, alterReview } = require('./controllers/reviews');
 const { sendCategories } = require('./controllers/categories');
 const { receiveComment, sendCommentsByReviewId } = require('./controllers/comments');
+const cors = require('cors');
+
+app.use(cors);
 
 app.use(express.json());
 
